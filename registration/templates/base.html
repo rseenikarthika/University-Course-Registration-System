@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{% block title %}Course Registration{% endblock %}</title>
+    <style>
+      .header {
+        background-color: #f2f2f2;
+        padding: 10px;
+      }
+      .header .logout {
+        float: right;
+      }
+      .messages {
+        margin-bottom: 20px;
+        padding: 10px;
+        border-radius: 6px;
+        font-size: 14px;
+      }
+
+      .messages.error {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+      }
+
+      .messages.success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <strong>Course Registration System</strong>
+      {% if user.is_authenticated %}
+      <a class="logout" href="{% url 'logout' %}">Logout</a>
+      {% endif %}
+    </div>
+
+    <div class="content">{% block content %}{% endblock %}</div>
+  </body>
+</html>

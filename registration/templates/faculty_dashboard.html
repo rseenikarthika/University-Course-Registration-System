@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block title %}Welcome Faculty{% endblock %}
+
+{% block content %}
+<style>
+    .faculty-container {
+        max-width: 600px;
+        margin: 60px auto;
+        padding: 30px;
+        background-color: #fefefe;
+        border-radius: 12px;
+        box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .faculty-container h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 24px;
+    }
+
+    .faculty-container form {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+
+    .faculty-container input {
+        padding: 10px;
+        font-size: 15px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+    }
+
+    .faculty-container button {
+        padding: 10px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .faculty-container button:hover {
+        background-color: #218838;
+    }
+
+    .course-list {
+        margin-top: 20px;
+    }
+
+    .course-list li {
+        padding: 8px;
+        background-color: #f1f1f1;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        margin-bottom: 8px;
+        font-size: 16px;
+    }
+
+
+</style>
+
+<div class="faculty-container">
+    <h2>Welcome Faculty</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="messages {{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="name" placeholder="Course Name" required>
+        <input type="text" name="code" placeholder="Course Code" required>
+        <button type="submit">Offer Course</button>
+    </form>
+
+    <div class="course-list">
+        <h3>Offered Courses</h3>
+        <ul>
+            {% for course in courses %}
+                <li>{{ course.name }} ({{ course.code }})</li>
+            {% empty %}
+                <li>No courses offered yet.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

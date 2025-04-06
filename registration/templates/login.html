@@ -1,0 +1,100 @@
+{% block content %}
+<style>
+    body, html {
+        height: 100%;
+        margin: 0;
+    }
+
+    .page-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        background-color: #f2f2f2;
+    }
+
+    .login-container {
+        max-width: 400px;
+        width: 100%;
+        padding: 30px;
+        border: 1px solid #ccc;
+        border-radius: 12px;
+        background-color: #f9f9f9;
+        box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .login-container h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .login-container input[type="text"],
+    .login-container input[type="password"] {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        box-sizing: border-box;
+    }
+
+    .login-container button {
+        width: 100%;
+        padding: 12px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .login-container button:hover {
+        background-color: #0056b3;
+    }
+
+    .error-message {
+        color: red;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .signup-options {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .signup-options a {
+        display: inline-block;
+        margin: 0 10px;
+        color: #007bff;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .signup-options a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<div class="page-wrapper">
+    <div class="login-container">
+        <h2>Login</h2>
+        <form method="post">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Username" autocomplete="off" required>
+            <input type="password" name="password" placeholder="Password" autocomplete="new-password" required>
+            <button type="submit">Login</button>
+            {% if error %}
+                <p class="error-message">{{ error }}</p>
+            {% endif %}
+        </form>
+
+        <div class="signup-options">
+            <p>Don't have an account?</p>
+            <a href="{% url 'register_student' %}">Sign up as Student</a>
+            <a href="{% url 'register_faculty' %}">Sign up as Faculty</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,74 @@
+<style>
+    .courses-container {
+        max-width: 500px;
+        margin: 60px auto;
+        padding: 30px;
+        background-color: #fefefe;
+        border-radius: 12px;
+        box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .courses-container h2 {
+        text-align: center;
+        margin-bottom: 25px;
+        font-size: 24px;
+    }
+
+    .courses-container p {
+        text-align: center;
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+
+    .courses-container select,
+    .courses-container button {
+        width: 100%;
+        padding: 12px;
+        margin-top: 15px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 15px;
+        box-sizing: border-box;
+    }
+
+    .courses-container button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .courses-container button:hover {
+        background-color: #0056b3;
+    }
+
+    .info-message {
+        color: green;
+        text-align: center;
+        margin-top: 15px;
+        font-weight: bold;
+    }
+</style>
+
+<div class="courses-container">
+    <h2>Available Courses</h2>
+
+    <p>Student: {{ student.user.first_name }} {{ student.user.last_name }}</p>
+    <p>Max allowed: 2 | Registered: {{ student.registration_set.count }}</p>
+
+    {% if student.registration_set.count < 2 %}
+        <form method="post">
+            {% csrf_token %}
+            <select name="course_id" required>
+                <option value="" disabled selected>Select a course</option>
+                {% for course in courses %}
+                    <option value="{{ course.id }}">{{ course.name }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Register</button>
+        </form>
+    {% else %}
+        <p class="info-message">You have reached the maximum number of course registrations.</p>
+    {% endif %}
+</div>
